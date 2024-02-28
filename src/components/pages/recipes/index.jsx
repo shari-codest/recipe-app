@@ -7,16 +7,20 @@ import {
   TextField,
   Typography,
   CardActionArea,
+  Link,
 } from "@mui/material";
 
 import { useState, useEffect } from "react";
 import emptyIcon from "../../../assets/images/empty icon.svg"
+import loadingIcon from "../../../assets/images/infinite-spinner.svg"
 
 export default function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const getRecipes = () => {
+    setLoading(true); 
     //prepare URL
     const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
     url.searchParams.append(
@@ -33,7 +37,8 @@ export default function Recipes() {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false))
   };
 
   useEffect(getRecipes, [keyword]);
@@ -47,21 +52,23 @@ export default function Recipes() {
         onKeyDown={event => event.key ==='Enter' &&
         setKeyword(event.target.value)} />
       
-      <Grid sx={{ mt: "1rem" }} container spacing={3}>
-        {recipes.length > 0 ? recipes.map((recipe) => (
+      <Grid sx={{ mt: "1rem", justifyContent:"center"}} container spacing={3}>
+        {loading ? <img src={loadingIcon} width="50%" /> : recipes.length > 0 ? recipes.map((recipe) => (
           <Grid key={recipe.id} item xs={4}>
             <Card sx={{ maxWidth: 345, height: "100%" }}>
               <CardActionArea sx={{ height: "100%" }}>
                 <CardMedia
                   component="img"
                   height="140"
-                  image={recipe.image}
+                  image={recipe.image}S
                   alt={recipe.title}
                 />
                 <CardContent sx={{ height: "100%" }}>
+                  <Link to={`/recipes/${recipe.id}`}>
                   <Typography gutterBottom variant="h5" component="div">
                     {recipe.title}
                   </Typography>
+                  </Link>
                 </CardContent>
               </CardActionArea>
             </Card>
