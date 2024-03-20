@@ -1,9 +1,9 @@
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Recipe from "./components/pages/recipe";
 import Recipes from "./components/pages/recipes"; 
 
-const router = ([
+const router = createBrowserRouter([
   {path:"/", element:<Recipes /> },
   {path: "/recipes", element: <Recipes /> },
   {path: "/recipes/:id", element: <Recipe /> }

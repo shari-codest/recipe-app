@@ -7,12 +7,12 @@ import {
   TextField,
   Typography,
   CardActionArea,
-  Link,
 } from "@mui/material";
 
 import { useState, useEffect } from "react";
 import emptyIcon from "../../../assets/images/empty icon.svg"
 import loadingIcon from "../../../assets/images/infinite-spinner.svg"
+import { Link } from "react-router-dom";
 
 export default function Recipes() {
   const [recipes, setRecipes] = useState([]);
